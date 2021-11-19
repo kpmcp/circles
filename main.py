@@ -4,19 +4,19 @@ from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QWidget
 from PyQt5.QtGui import QPainter, QColor
 from random import randint
+from git_and_circles import Ui_Circles
 
 
-class MyWidget(QWidget):
+class MyWidget(QWidget, Ui_Circles):
     def __init__(self):
         super().__init__()
-        uic.loadUi('git_and_circles.ui', self)
-        self.setWindowTitle('Git и желтые окружности')
+        self.setupUi(self)
         self.initUI()
+        self.setWindowTitle('Git и случайные окружности')
         self.do_paint = False
 
     def initUI(self):
         self.draw_circle_btn.clicked.connect(self.paint)
-        print(self.size())
 
     def paintEvent(self, event):
         if self.do_paint:
@@ -32,7 +32,7 @@ class MyWidget(QWidget):
     def draw_circle(self, qp):
         x, y = randint(1, 800), randint(1, 400)
         w = randint(1, 200)
-        qp.setBrush(QColor(255, 255, 0))
+        qp.setBrush(QColor(randint(0, 255), randint(0, 255), randint(0, 255)))
         qp.drawEllipse(x, y, w, w)
 
 
